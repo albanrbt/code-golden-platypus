@@ -276,7 +276,7 @@ void Spawn_Bonus(int tab[TAILLE][TAILLE]){
     y = rand()%TAILLE;
 
     }
-    while (tab[x][y] != SOL)
+    while (tab[x][y] != SOL);
 
     tab[x][y] = KIT;
 
