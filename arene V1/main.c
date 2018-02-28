@@ -5,10 +5,10 @@
 
 #define Maladie 6
 #define taille 10
-#define chance 2
+#define chance 1
 #define Sol 0
 
-int Degats(int Nb_Vies[30],int joueur,int tab[taille][taille]);
+int Degats(int Nb_Vies[30],int joueur);
 
 void SetColor(int ForgC)//Ne pas tenir compte de cette fonction.
 {
@@ -38,8 +38,8 @@ void Spawn_Maladie (int tab[taille][taille])
  {
     int x,y;
 
-    x = rand()%taille+1; //spawn de la maladie aléatoire
-    y = rand()%taille+1;
+    x = rand()%taille-1; //spawn de la maladie aléatoire
+    y = rand()%taille-1;
 
     tab[x][y] = Maladie;
 }
@@ -86,6 +86,18 @@ void Propagation_Maladie(int tab[taille][taille],int joueur,int Nb_Vies[30]){
     int i,j;
     int test;
     int degats;
+    int tab1[taille][taille];
+
+
+    srand(time(NULL));
+    for(i=0;i<taille-1;i++){
+
+        for(j=0;j<taille-1;j++){
+
+            tab1[i][j] = tab[i][j];
+        }
+    }
+
 
     for (i=0;i<taille-1;i++){
 
@@ -100,12 +112,12 @@ void Propagation_Maladie(int tab[taille][taille],int joueur,int Nb_Vies[30]){
                     if (test == 1 && i>0 && j>0 && i<taille && j<taille){ // Propagation de la maladie
                         if (tab[i-1][j] != Sol && tab[i-1][j]!= Maladie){
 
-                            degats = Degats(Nb_Vies,joueur,tab);
+                            degats = Degats(Nb_Vies,joueur);
 
                     }
                     }
                     else if (test == 0){
-                        tab[i-1][j] = Maladie;
+                        tab1[i-1][j] = Maladie;
                 }
 
 
@@ -114,12 +126,12 @@ void Propagation_Maladie(int tab[taille][taille],int joueur,int Nb_Vies[30]){
 
                         if (tab[i+1][j] != Sol && tab[i+1][j]!= Maladie){
 
-                            degats = Degats(Nb_Vies,joueur,tab);
+                            degats = Degats(Nb_Vies,joueur);
 
                     }
                     }
                     else if (degats == 0){
-                        tab[i+1][j] = Maladie;
+                        tab1[i+1][j] = Maladie;
 
                     }
 
@@ -128,12 +140,12 @@ void Propagation_Maladie(int tab[taille][taille],int joueur,int Nb_Vies[30]){
 
                         if (tab[i][j-1] != Sol && tab[i][j-1]!= Maladie){
 
-                            degats = Degats(Nb_Vies,joueur,tab);
+                            degats = Degats(Nb_Vies,joueur);
 
                     }
                     }
                     else if (degats == 0){
-                        tab[i][j-1] = Maladie;
+                        tab1[i][j-1] = Maladie;
                     }
 
 
@@ -142,20 +154,29 @@ void Propagation_Maladie(int tab[taille][taille],int joueur,int Nb_Vies[30]){
 
                         if (tab[i][j+1] != Sol && tab[i][j+1]!= Maladie){
 
-                            degats = Degats(Nb_Vies,joueur,tab);
+                            degats = Degats(Nb_Vies,joueur);
 
                     }
                     }
                     else if (degats == 0){
-                        tab[i][j+1] = Maladie;
+                        tab1[i][j+1] = Maladie;
                     }
                }
        }
     }
+
+    for(i=0;i<taille-1;i++){
+
+        for(j=0;j<taille-1;j++){
+
+            tab1[i][j] = tab[i][j];
+        }
+    }
+
     }
 
 
-int Degats(int Nb_Vies[30],int joueur,int tab[taille][taille]){
+int Degats(int Nb_Vies[30],int joueur){
 
 
 
@@ -179,16 +200,16 @@ int* cood;
         for (i=1;i<= nb_joueurs+1;i++)
         {
 
-            x= coord_JoueursX(tab,i);
-            y= coord_JoueursY(tab,i);
+            x = coord_JoueursX(tab,i);
+            y = coord_JoueursY(tab,i);
             //action = IA_i();
-            action= IA_test();
+            action = IA_test();
 
 
        if (action == 1){ ///en bas
-            tab[x][y]=0;
-            x=x+1;
-            tab[x][y]=i;
+            tab[x][y]= 0;
+            x = x+1;
+            tab[x][y] = i;
        }
 
        else if (action == 2){
@@ -208,12 +229,12 @@ int* cood;
 void Spawn_Joueurs(int tab[taille][taille],int nb_joueurs)
 {
 
-    int x,i,y;
+    int x,y,i;
 
     for (i=1;i<=nb_joueurs;i++){
     do {
-    x = rand()%taille;
-    y = rand()%taille;
+    x = rand()%taille-1;
+    y = rand()%taille-1;
 
     }
     while (tab[x][y] == Maladie);
@@ -268,16 +289,16 @@ int joueur = 1;  /// Le joueur qui joue actuellement
 
     for(i=0;i<30;i++){
 
-        Nb_Vies[i]= 2;
+        Nb_Vies[i] = 2;
     }
 
     Spawn_Maladie(tab);
     Spawn_Joueurs(tab,nb_joueurs);
 
     for (i=0;i<10;i++){
+            Afficher_carte(tab);
             Tour_par_Tour(tab,nb_joueurs);
             Propagation_Maladie(tab,joueur,Nb_Vies);
-            Afficher_carte(tab);
             Wait();
             ClearTerms();
     }
