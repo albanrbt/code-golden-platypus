@@ -3,12 +3,12 @@
 #include <time.h>
 #include <windows.h>
 
-#define Maladie 6
-#define taille 10
-#define chance 2
-#define Sol 0
+#define MALADIE 6
+#define TAILLE 10
+#define CHANCE 1
+#define SOL 0
 
-int Degats(int Nb_Vies[30],int joueur,int tab[taille][taille]);
+int Degats(int Nb_Vies[30],int joueur);
 
 void SetColor(int ForgC)//Ne pas tenir compte de cette fonction.
 {
@@ -34,14 +34,14 @@ void Wait()
     system("pause");
 }
 
-void Spawn_Maladie (int tab[taille][taille])
+void Spawn_Maladie (int tab[TAILLE][TAILLE])
  {
     int x,y;
 
-    x = rand()%taille+1; //spawn de la maladie aléatoire
-    y = rand()%taille+1;
+    x = rand()%TAILLE-1; //spawn de la MALADIE aléatoire
+    y = rand()%TAILLE-1;
 
-    tab[x][y] = Maladie;
+    tab[x][y] = MALADIE;
 }
 int IA_test()
 {
@@ -49,14 +49,14 @@ int IA_test()
     return 0;
 }
 
-int coord_JoueursX(int tab[taille][taille],int joueurs)
+int coord_JoueursX(int tab[TAILLE][TAILLE],int joueurs)
 {
     int coord[2];
     int i,j,x;
 
-    for (i=0;i<taille;i++){
+    for (i=0;i<TAILLE;i++){
 
-        for(j=0;j<taille;j++){
+        for(j=0;j<TAILLE;j++){
             if (tab[i][j]==joueurs){
                 x=i;
                 return x;
@@ -65,14 +65,14 @@ int coord_JoueursX(int tab[taille][taille],int joueurs)
 }
 }
 
-int coord_JoueursY(int tab[taille][taille],int joueurs)
+int coord_JoueursY(int tab[TAILLE][TAILLE],int joueurs)
 {
     int coord[2];
     int i,j,y;
 
-    for (i=0;i<taille;i++){
+    for (i=0;i<TAILLE;i++){
 
-        for(j=0;j<taille;j++){
+        for(j=0;j<TAILLE;j++){
             if (tab[i][j]==joueurs){
                 y=j;
                 return y;
@@ -81,81 +81,102 @@ int coord_JoueursY(int tab[taille][taille],int joueurs)
 }
 }
 
-void Propagation_Maladie(int tab[taille][taille],int joueur,int Nb_Vies[30]){
+void Propagation_Maladie(int tab[TAILLE][TAILLE],int joueur,int Nb_Vies[30]){
 
     int i,j;
     int test;
     int degats;
-
-    for (i=0;i<taille-1;i++){
-
-
-        for(j=0;j<taille-1;j++){
+    int tab1[TAILLE][TAILLE];
 
 
-        if (tab[i][j] == Maladie){
+    srand(time(NULL));
+    for(i=0;i<TAILLE-1;i++){
 
-                    test = rand()%chance;   // 1 chance sur 5 que la maladie se propage
+        for(j=0;j<TAILLE-1;j++){
 
-                    if (test == 1 && i>0 && j>0 && i<taille && j<taille){ // Propagation de la maladie
-                        if (tab[i-1][j] != Sol && tab[i-1][j]!= Maladie){
+            tab1[i][j] = tab[i][j];
+        }
+    }
 
-                            degats = Degats(Nb_Vies,joueur,tab);
+
+    for (i=0;i<TAILLE-1;i++){
+
+
+        for(j=0;j<TAILLE-1;j++){
+
+
+        if (tab[i][j] == MALADIE){
+
+                    test = rand()%CHANCE;   // 1 CHANCE sur 5 que la MALADIE se propage
+
+                    if (test == 1 && i>0 && j>0 && i<TAILLE && j<TAILLE){ // Propagation de la MALADIE
+                        if (tab[i-1][j] != SOL && tab[i-1][j]!= MALADIE){
+
+                            degats = Degats(Nb_Vies,joueur);
 
                     }
                     }
                     else if (test == 0){
-                        tab[i-1][j] = Maladie;
+                        tab1[i-1][j] = MALADIE;
                 }
 
 
-                    test = rand()%chance;
-                    if (test == 1 && i>0 && j>0 && i<taille && j<taille){
+                    test = rand()%CHANCE;
+                    if (test == 1 && i>0 && j>0 && i<TAILLE && j<TAILLE){
 
-                        if (tab[i+1][j] != Sol && tab[i+1][j]!= Maladie){
+                        if (tab[i+1][j] != SOL && tab[i+1][j]!= MALADIE){
 
-                            degats = Degats(Nb_Vies,joueur,tab);
-
-                    }
-                    }
-                    else if (degats == 0){
-                        tab[i+1][j] = Maladie;
-
-                    }
-
-                    test = rand()%chance;
-                    if (test == 1 && i>0 && j>0 && i<taille && j<taille){
-
-                        if (tab[i][j-1] != Sol && tab[i][j-1]!= Maladie){
-
-                            degats = Degats(Nb_Vies,joueur,tab);
+                            degats = Degats(Nb_Vies,joueur);
 
                     }
                     }
                     else if (degats == 0){
-                        tab[i][j-1] = Maladie;
+                        tab1[i+1][j] = MALADIE;
+
                     }
 
+                    test = rand()%CHANCE;
+                    if (test == 1 && i>0 && j>0 && i<TAILLE && j<TAILLE){
 
-                    test = rand()%chance;
-                    if (test == 1 && i>0 && j>0 && i<taille && j<taille){
+                        if (tab[i][j-1] != SOL && tab[i][j-1]!= MALADIE){
 
-                        if (tab[i][j+1] != Sol && tab[i][j+1]!= Maladie){
-
-                            degats = Degats(Nb_Vies,joueur,tab);
+                            degats = Degats(Nb_Vies,joueur);
 
                     }
                     }
                     else if (degats == 0){
-                        tab[i][j+1] = Maladie;
+                        tab1[i][j-1] = MALADIE;
+                    }
+
+
+                    test = rand()%CHANCE;
+                    if (test == 1 && i>0 && j>0 && i<TAILLE && j<TAILLE){
+
+                        if (tab[i][j+1] != SOL && tab[i][j+1]!= MALADIE){
+
+                            degats = Degats(Nb_Vies,joueur);
+
+                    }
+                    }
+                    else if (degats == 0){
+                        tab1[i][j+1] = MALADIE;
                     }
                }
        }
     }
+
+    for(i=0;i<TAILLE-1;i++){
+
+        for(j=0;j<TAILLE-1;j++){
+
+            tab1[i][j] = tab[i][j];
+        }
+    }
+
     }
 
 
-int Degats(int Nb_Vies[30],int joueur,int tab[taille][taille]){
+int Degats(int Nb_Vies[30],int joueur){
 
 
 
@@ -170,7 +191,7 @@ int Degats(int Nb_Vies[30],int joueur,int tab[taille][taille]){
 }
 }
 
-void Tour_par_Tour(int tab[taille][taille],int nb_joueurs){ /// La fonction qui lance les différentes actions a faire (ou les execute)
+void Tour_par_Tour(int tab[TAILLE][TAILLE],int nb_joueurs){ /// La fonction qui lance les différentes actions a faire (ou les execute)
 
 int i,j,action,x,y;
 int coord[2];
@@ -179,16 +200,16 @@ int* cood;
         for (i=1;i<= nb_joueurs+1;i++)
         {
 
-            x= coord_JoueursX(tab,i);
-            y= coord_JoueursY(tab,i);
+            x = coord_JoueursX(tab,i);
+            y = coord_JoueursY(tab,i);
             //action = IA_i();
-            action= IA_test();
+            action = IA_test();
 
 
        if (action == 1){ ///en bas
-            tab[x][y]=0;
-            x=x+1;
-            tab[x][y]=i;
+            tab[x][y]= 0;
+            x = x+1;
+            tab[x][y] = i;
        }
 
        else if (action == 2){
@@ -205,30 +226,30 @@ int* cood;
         }
 }
 
-void Spawn_Joueurs(int tab[taille][taille],int nb_joueurs)
+void Spawn_Joueurs(int tab[TAILLE][TAILLE],int nb_joueurs)
 {
 
-    int x,i,y;
+    int x,y,i;
 
     for (i=1;i<=nb_joueurs;i++){
     do {
-    x = rand()%taille;
-    y = rand()%taille;
+    x = rand()%TAILLE-1;
+    y = rand()%TAILLE-1;
 
     }
-    while (tab[x][y] == Maladie);
+    while (tab[x][y] == MALADIE);
     tab[x][y] = i;
     }
 }
 
-void Afficher_carte(int tab[taille][taille])
+void Afficher_carte(int tab[TAILLE][TAILLE])
 {
     int i,j;
 
-    for (i=0;i<taille;i++)
+    for (i=0;i<TAILLE;i++)
     {
 
-        for(j=0;j<taille;j++){
+        for(j=0;j<TAILLE;j++){
 
             printf("%d ",tab[i][j]);
         }
@@ -249,16 +270,16 @@ int nb_joueurs;
 int main(){ /// Recuperer les valeurs des joueurs dans le tableau
 
 int i,j;
-int tab[taille][taille];
+int tab[TAILLE][TAILLE];
 int nb_joueurs;
 int Nb_Vies[30];
 int joueur = 1;  /// Le joueur qui joue actuellement
 
 
     srand(time(NULL));
-    for (i=0;i<taille;i++){
+    for (i=0;i<TAILLE;i++){
 
-        for(j=0;j<taille;j++){
+        for(j=0;j<TAILLE;j++){
             SetColor(0);
             tab[i][j] = 0;
         }
@@ -268,16 +289,16 @@ int joueur = 1;  /// Le joueur qui joue actuellement
 
     for(i=0;i<30;i++){
 
-        Nb_Vies[i]= 2;
+        Nb_Vies[i] = 2;
     }
 
     Spawn_Maladie(tab);
     Spawn_Joueurs(tab,nb_joueurs);
 
     for (i=0;i<10;i++){
+            Afficher_carte(tab);
             Tour_par_Tour(tab,nb_joueurs);
             Propagation_Maladie(tab,joueur,Nb_Vies);
-            Afficher_carte(tab);
             Wait();
             ClearTerms();
     }
