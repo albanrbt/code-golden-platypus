@@ -5,7 +5,7 @@
 
 #define MALADIE 6
 #define TAILLE 10
-#define CHANCE 1
+#define CHANCE 2
 #define SOL 0
 #define KIT 44
 
@@ -78,6 +78,7 @@ void Propagation_Maladie(int tab[TAILLE][TAILLE],int joueur,int Nb_Vies[30]){
 
 
     srand(time(NULL));
+
     for(i=0;i<TAILLE-1;i++){
 
         for(j=0;j<TAILLE-1;j++){
@@ -157,7 +158,7 @@ void Propagation_Maladie(int tab[TAILLE][TAILLE],int joueur,int Nb_Vies[30]){
 
         for(j=0;j<TAILLE-1;j++){
 
-            tab1[i][j] = tab[i][j];
+            tab[i][j] = tab1[i][j];
         }
     }
 
@@ -268,6 +269,7 @@ void Spawn_Maladie (int tab[TAILLE][TAILLE]){
     y = rand()%TAILLE-1;
 
     tab[x][y] = MALADIE;
+
 }
 
 void Spawn_Bonus(int tab[TAILLE][TAILLE]){
@@ -341,6 +343,7 @@ int joueur = 1;  /// Le joueur qui joue actuellement
     Spawn_Bonus(tab);
 
     for (i=0;i<10;i++){
+
             Afficher_carte(tab);
             Tour_par_Tour(tab,nb_joueurs,Nb_Vies,joueur);
             Propagation_Maladie(tab,joueur,Nb_Vies);
