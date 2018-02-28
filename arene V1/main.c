@@ -175,6 +175,12 @@ void Propagation_Maladie(int tab[TAILLE][TAILLE],int joueur,int Nb_Vies[30]){
 
     }
 
+void Bonus(int Nb_Vies[30],int joueur){
+
+    Nb_Vies[joueur-1] = Nb_Vies[joueur-1] + 1;
+
+
+}
 
 int Degats(int Nb_Vies[30],int joueur){
 
