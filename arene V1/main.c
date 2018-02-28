@@ -191,7 +191,8 @@ int Degats(int Nb_Vies[30],int joueur){
 }
 }
 
-void Tour_par_Tour(int tab[TAILLE][TAILLE],int nb_joueurs){ /// La fonction qui lance les différentes actions a faire (ou les execute)
+
+void Tour_par_Tour(int tab[taille][taille],int nb_joueurs){ /// La fonction qui lance les différentes actions a faire (ou les execute)
 
 int i,j,action,x,y;
 int coord[2];
@@ -200,32 +201,39 @@ int* cood;
         for (i=1;i<= nb_joueurs+1;i++)
         {
 
-            x = coord_JoueursX(tab,i);
-            y = coord_JoueursY(tab,i);
+            x= coord_JoueursX(tab,i);
+            y= coord_JoueursY(tab,i);
             //action = IA_i();
-            action = IA_test();
+            action= IA_test();
 
 
        if (action == 1){ ///en bas
-            tab[x][y]= 0;
-            x = x+1;
-            tab[x][y] = i;
+            tab[x][y]=0;
+            tab[x+1][y]=i;
        }
 
-       else if (action == 2){
+       else if (action == 2){///en haut
+            tab[x][y]=0;
+            tab[x-1][y]=i;
 
        }
 
-       else if (action == 2){}
+       else if (action == 3){/// a droite
+          tab[x][y]=0;
+          tab[x][y+1]=i;
 
-       else if (action == 2){}
+       }
+
+       else if (action == 4){
+        tab[x][y]=0;
+        tab[x][y-1]=i;
+       }
 
        else if (action == 2){}
 
        else if (action == 2){}
         }
 }
-
 void Spawn_Joueurs(int tab[TAILLE][TAILLE],int nb_joueurs)
 {
 
