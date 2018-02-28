@@ -8,6 +8,7 @@
 #define CHANCE 2
 #define SOL 0
 #define KIT 44
+#define PIEGE 33
 
 int Degats(int Nb_Vies[30],int joueur);
 
@@ -209,7 +210,11 @@ int i,j,action,x,y;
             if (tab[x+1][y]= KIT){
                 Bonus(Nb_Vies,joueur);
             }
+            else if (tab[x+1][y]= PIEGE){
+                Degats(Nb_Vies,joueur);
+            }
        }
+
 
        else if (action == 2){///en haut
             tab[x][y]=0;
@@ -218,14 +223,20 @@ int i,j,action,x,y;
             if (tab[x-1][y]= KIT){
                 Bonus(Nb_Vies,joueur);
             }
+            else if (tab[x-1][y]= PIEGE){
+                Degats(Nb_Vies,joueur);
+            }
        }
 
        else if (action == 3){/// a droite
           tab[x][y]=0;
           tab[x][y+1]=i;
 
-            if (tab[x+1][y]= KIT){
+            if (tab[x][y+1]= KIT){
                 Bonus(Nb_Vies,joueur);
+            }
+            else if (tab[x][y+1]= PIEGE){
+                Degats(Nb_Vies,joueur);
             }
        }
 
@@ -233,10 +244,12 @@ int i,j,action,x,y;
         tab[x][y]=0;
         tab[x][y-1]=i;
 
-            if (tab[x+1][y]= KIT){
+            if (tab[x][y-1]= KIT){
                 Bonus(Nb_Vies,joueur);
             }
-
+            else if (tab[x][y-1]= PIEGE){
+                Degats(Nb_Vies,joueur);
+            }
        }
 
        else if (action == 2){}
@@ -271,7 +284,20 @@ void Spawn_Maladie (int tab[TAILLE][TAILLE]){
     tab[x][y] = MALADIE;
 
 }
+void Spawn_Piege(int tab[TAILLE][TAILLE]){
 
+    int x,y;
+
+    do
+    {
+        x = rand()%TAILLE;
+        y = rand()%TAILLE;
+
+    }
+    while (tab[x][y] != SOL);
+
+    tab[x][y] = PIEGE;
+}
 void Spawn_Bonus(int tab[TAILLE][TAILLE]){
 
     int x,y;
@@ -341,6 +367,7 @@ int joueur = 1;  /// Le joueur qui joue actuellement
     Spawn_Maladie(tab);
     Spawn_Joueurs(tab,nb_joueurs);
     Spawn_Bonus(tab);
+    Spawn_Piege(tab);
 
     for (i=0;i<10;i++){
 
