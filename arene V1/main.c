@@ -5,6 +5,9 @@
 #define taille 50
 #include <windows.h>
 
+
+blabla blabla
+
 void SetColor(int ForgC)//Ne pas tenir compte de cette fonction.
 {
   WORD wColor;
@@ -135,7 +138,7 @@ int coord_JoueursY(int tab[taille][taille],int joueurs)
 }
 
 
-void Tour_par_Tour(int tab[taille][taille],int nb_joueurs){ /// La fonction qui lance les différentes actions a faire (ou les execute)
+void Tour_par_Tour(int tab[taille][taille],int nb_joueurs){ /// La fonction qui lance les diffÃ©rentes actions a faire (ou les execute)
 
 int i,j,action,x,y;
 int coord[2];
