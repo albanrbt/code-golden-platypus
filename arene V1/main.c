@@ -187,8 +187,6 @@ int Degats(int Nb_Vies[30],int joueur){
 void Tour_par_Tour(int tab[TAILLE][TAILLE],int nb_joueurs,int Nb_Vies[30],int joueur){ /// La fonction qui lance les différentes actions a faire (ou les execute)
 
 int i,j,action,x,y;
-int coord[2];
-int* cood;
 
         for (i=1;i<= nb_joueurs+1;i++)
         {
