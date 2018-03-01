@@ -4,6 +4,7 @@
 #include <windows.h>
 
 #define MALADIE 6
+#define NB_TOURS 10
 #define TAILLE 10
 #define CHANCE 2
 #define SOL 0
@@ -339,6 +340,94 @@ int nb_joueurs;
 
     return nb_joueurs;
 }
+
+int Numero_Joueur(int tab[TAILLE][TAILLE],int test)
+{
+    int i,j,x;
+    for (i=0;i<TAILLE;i++)
+        {
+
+        for(j=0;j<TAILLE;j++)
+        {
+            if ((tab[i][j]>= 1) && (tab[i][j]<= 30) && (tab[i][j]!= test))
+            {
+                x = tab[i][j];
+
+            }
+        }
+        }
+        return x;
+}
+
+int Shifumi (int J1, int J2)
+{
+ printf("bataille entre %d et %d ", J1,J2);
+}
+
+int Afficher_Gagnant(int gagnant)
+{
+    ClearTerms();
+    printf("gagnant \n \n");
+    Wait();
+    return 1;
+}
+
+int fin_jeu(int tab[TAILLE][TAILLE])
+{
+    int i,j,y,joueur_Restant,test,Joueur1,Joueur2,cas,gagnant;
+
+
+    test=0;
+    y=0;
+    joueur_Restant = 0;
+    for (i=0;i<TAILLE;i++){
+
+        for(j=0;j<TAILLE;j++){
+            if ((tab[i][j]>= 1) && (tab[i][j]<= 30)){
+                joueur_Restant = joueur_Restant+1;
+
+            }
+        }
+    }
+
+
+     if (joueur_Restant == 2)
+     {
+         cas = 2;
+         Joueur1 = Numero_Joueur(tab,test);
+         test = Joueur1;
+         Joueur2 = Numero_Joueur(tab,test);
+     }
+
+    if (joueur_Restant > 2)
+    {
+        cas = 3;
+    }
+     if (joueur_Restant == 0)
+    {
+        if (cas == 2)
+        {
+            gagnant = Shifumi(Joueur1,Joueur2);
+            y = Afficher_Gagnant(gagnant);
+        }
+        else if (cas == 3)
+        {
+            printf("pas de gagnant, on relance la partie");
+            Wait();
+            ClearTerms();
+            main();
+        }
+    }
+    if (joueur_Restant == 1)
+    {
+        gagnant = Numero_Joueur(tab,test);
+        y = Afficher_Gagnant(gagnant);
+    }
+
+
+ return y;
+}
+
 int main(){ /// Recuperer les valeurs des joueurs dans le tableau
 
 int i,j;
@@ -346,7 +435,7 @@ int tab[TAILLE][TAILLE];
 int nb_joueurs;
 int Nb_Vies[30];
 int joueur = 1;  /// Le joueur qui joue actuellement
-
+int gagnant;
 
     srand(time(NULL));
     for (i=0;i<TAILLE;i++){
@@ -357,7 +446,12 @@ int joueur = 1;  /// Le joueur qui joue actuellement
         }
     }
     SetColor(255);
-    nb_joueurs = Nombre_Joueurs();
+    do
+    {
+       nb_joueurs = Nombre_Joueurs();
+    }
+    while (nb_joueurs <= 0);
+
 
     for(i=0;i<30;i++){
 
@@ -369,13 +463,20 @@ int joueur = 1;  /// Le joueur qui joue actuellement
     Spawn_Bonus(tab);
     Spawn_Piege(tab);
 
-    for (i=0;i<10;i++){
+    for (i=0;i<NB_TOUR;i++){
 
             Afficher_carte(tab);
             Tour_par_Tour(tab,nb_joueurs,Nb_Vies,joueur);
             Propagation_Maladie(tab,joueur,Nb_Vies);
+            gagnant = fin_jeu(tab);
+            if (gagnant == 1)
+            {
+                return 0;
+            }
+            else {
             Wait();
             ClearTerms();
+            }
     }
 
 
