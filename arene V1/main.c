@@ -4,14 +4,16 @@
 #include <windows.h>
 
 #define MALADIE 6
-#define NB_TOURS 10
 #define TAILLE 10
 #define CHANCE 2
 #define SOL 0
 #define KIT 44
 #define PIEGE 33
+#define RADAR 2
 
 int Degats(int Nb_Vies[30],int joueur);
+
+int main();
 
 void SetColor(int ForgC){//Ne pas tenir compte de cette fonction.
 
@@ -81,9 +83,9 @@ void Propagation_Maladie(int tab[TAILLE][TAILLE],int joueur,int Nb_Vies[30]){
 
     srand(time(NULL));
 
-    for(i=0;i<TAILLE-1;i++){
+    for(i=0;i<TAILLE;i++){
 
-        for(j=0;j<TAILLE-1;j++){
+        for(j=0;j<TAILLE;j++){
 
             tab1[i][j] = tab[i][j];
 }
@@ -100,65 +102,88 @@ void Propagation_Maladie(int tab[TAILLE][TAILLE],int joueur,int Nb_Vies[30]){
 
                 test = rand()%CHANCE;   // 1 CHANCE sur 5 que la MALADIE se propage
 
-                if (test == 1 && i>0 && j>0 && i<TAILLE && j<TAILLE){ // Propagation de la MALADIE
+                if (test == 1 && i > 0 && j > 0 && i<TAILLE && j<TAILLE){ // Propagation de la MALADIE
                     if (tab[i-1][j] >= 1 && tab[i-1][j]<=30){
 
                     degats = Degats(Nb_Vies,joueur);
 
-}
-}
-                else if (test == 0){
-                    tab1[i-1][j] = MALADIE;
-}
 
+                }
+                if (degats == 0){
+                    tab1[i-1][j] = MALADIE;
+            }
+                else
+                    {
+                    tab1[i-1][j] = MALADIE;
+
+                }
+
+                }
 
                 test = rand()%CHANCE;
-                    if (test == 1 && i>0 && j>0 && i<TAILLE && j<TAILLE){
+                    if (test == 1 && i > 0 && j > 0 && i<TAILLE && j<TAILLE){
 
                         if (tab[i+1][j] >= 1 && tab[i+1][j] <= 30){
 
                             degats = Degats(Nb_Vies,joueur);
+}
 
-}
-}
-                else if (degats == 0){
+                if (degats == 0){
                     tab1[i+1][j] = MALADIE;
 
 }
 
+                else{
+
+                   tab1[i+1][j] = MALADIE;
+                }
+                }
                 test = rand()%CHANCE;
-                if (test == 1 && i>0 && j>0 && i<TAILLE && j<TAILLE){
+                if (test == 1 && i > 0 && j > 0 && i<TAILLE && j<TAILLE){
 
                     if (tab[i][j-1] >= 1 && tab[i][j-1] <= 30){
 
                         degats = Degats(Nb_Vies,joueur);
 
+
 }
-}
-                else if (degats == 0){
+
+                if (degats == 0){
                     tab1[i][j-1] = MALADIE;
 }
 
+                else
+                    {
+                    tab1[i][j-1] = MALADIE;
+                    }
 
+                }
                 test = rand()%CHANCE;
-                if (test == 1 && i>0 && j>0 && i<TAILLE && j<TAILLE){
+                if (test == 1 && i > 0 && j > 0 && i<TAILLE && j<TAILLE){
 
                     if (tab[i][j+1] >= 1 && tab[i][j+1] <= 30){
 
                         degats = Degats(Nb_Vies,joueur);
 
-}
-}
-                else if (degats == 0){
+                    }
+
+                 if (degats == 0){
                     tab1[i][j+1] = MALADIE;
 }
+
+                    else
+                        {
+                        tab1[i][j+1] = MALADIE;
+
+                    }
+                }
 }
 }
 }
 
-    for(i=0;i<TAILLE-1;i++){
+    for(i=0;i<TAILLE;i++){
 
-        for(j=0;j<TAILLE-1;j++){
+        for(j=0;j<TAILLE;j++){
 
             tab[i][j] = tab1[i][j];
         }
@@ -178,7 +203,7 @@ int Degats(int Nb_Vies[30],int joueur){
 
 
     Nb_Vies[joueur-1] = Nb_Vies[joueur-1] - 1;
-    if (Nb_Vies[joueur-1] == 0){
+    if (Nb_Vies[joueur-1] <= 0){
 
         return 0;
     }
@@ -191,7 +216,7 @@ int Degats(int Nb_Vies[30],int joueur){
 
 void Tour_par_Tour(int tab[TAILLE][TAILLE],int nb_joueurs,int Nb_Vies[30],int joueur){ /// La fonction qui lance les différentes actions a faire (ou les execute)
 
-int i,j,action,x,y;
+int i,action,x,y;
 
 
 
@@ -208,10 +233,10 @@ int i,j,action,x,y;
             tab[x][y]=0;
             tab[x+1][y]=i;
 
-            if (tab[x+1][y]= KIT){
+            if (tab[x+1][y]== KIT){
                 Bonus(Nb_Vies,joueur);
             }
-            else if (tab[x+1][y]= PIEGE){
+            else if (tab[x+1][y] == PIEGE){
                 Degats(Nb_Vies,joueur);
             }
        }
@@ -221,10 +246,10 @@ int i,j,action,x,y;
             tab[x][y]=0;
             tab[x-1][y]=i;
 
-            if (tab[x-1][y]= KIT){
+            if (tab[x-1][y] == KIT){
                 Bonus(Nb_Vies,joueur);
             }
-            else if (tab[x-1][y]= PIEGE){
+            else if (tab[x-1][y] == PIEGE){
                 Degats(Nb_Vies,joueur);
             }
        }
@@ -233,10 +258,10 @@ int i,j,action,x,y;
           tab[x][y]=0;
           tab[x][y+1]=i;
 
-            if (tab[x][y+1]= KIT){
+            if (tab[x][y+1] == KIT){
                 Bonus(Nb_Vies,joueur);
             }
-            else if (tab[x][y+1]= PIEGE){
+            else if (tab[x][y+1] == PIEGE){
                 Degats(Nb_Vies,joueur);
             }
        }
@@ -245,10 +270,10 @@ int i,j,action,x,y;
         tab[x][y]=0;
         tab[x][y-1]=i;
 
-            if (tab[x][y-1]= KIT){
+            if (tab[x][y-1] == KIT){
                 Bonus(Nb_Vies,joueur);
             }
-            else if (tab[x][y-1]= PIEGE){
+            else if (tab[x][y-1] == PIEGE){
                 Degats(Nb_Vies,joueur);
             }
        }
@@ -262,16 +287,20 @@ int i,j,action,x,y;
 void Spawn_Joueurs(int tab[TAILLE][TAILLE],int nb_joueurs){
 
     int x,y,i;
+    int X_maladie,Y_maladie;
+
+    X_maladie = coord_JoueursX(tab,MALADIE);
+    Y_maladie = coord_JoueursY(tab,MALADIE);
 
     for (i=1;i<=nb_joueurs;i++){
 
         do {
-            x = rand()%TAILLE-1;
-            y = rand()%TAILLE-1;
+            x = rand()%TAILLE;
+            y = rand()%TAILLE;
 
-}
-        while (tab[x][y] != SOL);
-        tab[x][y] = i;
+        }
+        while (tab[x][y] != SOL); //&& (((x - X_maladie) != RADAR) || ((x - X_maladie) != -RADAR)) && (((y - Y_maladie) != RADAR) || ((y - Y_maladie) != -RADAR)));
+        tab[x][y] = i;              /// cest a revoir
     }
 }
 
@@ -463,7 +492,7 @@ int gagnant;
     Spawn_Bonus(tab);
     Spawn_Piege(tab);
 
-    for (i=0;i<NB_TOUR;i++){
+    for (i=0;i<10;i++){
 
             Afficher_carte(tab);
             Tour_par_Tour(tab,nb_joueurs,Nb_Vies,joueur);
