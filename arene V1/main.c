@@ -300,18 +300,20 @@ void Spawn_Joueurs(int tab[TAILLE][TAILLE],int nb_joueurs){
 
         }
         while (tab[x][y] != SOL || x > (X_maladie-RADAR) && x < (X_maladie+RADAR) || y > (Y_maladie-RADAR) && y < (Y_maladie+RADAR));
-        tab[x][y] = i;              /// cest a revoir
+        tab[x][y] = i;
     }
 }
 
 void Spawn_Maladie (int tab[TAILLE][TAILLE]){
 
     int x,y;
-    do{
-    x = rand()%TAILLE; //spawn de la MALADIE aléatoire
-    y = rand()%TAILLE;
+
+    do
+    {
+    x = rand()%TAILLE-1; //spawn de la MALADIE aléatoire
+    y = rand()%TAILLE-1;
     }
-    while (x<1 && x>9 && y<1 && y>9);
+    while (x<1 || x>TAILLE-1 || y<1 || y>TAILLE-1);
 
     tab[x][y] = MALADIE;
 
