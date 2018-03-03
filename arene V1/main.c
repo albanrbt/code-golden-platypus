@@ -9,7 +9,7 @@
 #define SOL 0
 #define KIT 44
 #define PIEGE 33
-#define RADAR 2
+#define RADAR 3
 
 int Degats(int Nb_Vies[30],int joueur);
 
@@ -299,7 +299,7 @@ void Spawn_Joueurs(int tab[TAILLE][TAILLE],int nb_joueurs){
             y = rand()%TAILLE;
 
         }
-        while (tab[x][y] != SOL); //&& (((x - X_maladie) != RADAR) || ((x - X_maladie) != -RADAR)) && (((y - Y_maladie) != RADAR) || ((y - Y_maladie) != -RADAR)));
+        while (tab[x][y] != SOL || x > (X_maladie-RADAR) && x < (X_maladie+RADAR) || y > (Y_maladie-RADAR) && y < (Y_maladie+RADAR));
         tab[x][y] = i;              /// cest a revoir
     }
 }
@@ -307,11 +307,14 @@ void Spawn_Joueurs(int tab[TAILLE][TAILLE],int nb_joueurs){
 void Spawn_Maladie (int tab[TAILLE][TAILLE]){
 
     int x,y;
-
-    x = rand()%TAILLE-1; //spawn de la MALADIE aléatoire
-    y = rand()%TAILLE-1;
+    do{
+    x = rand()%TAILLE; //spawn de la MALADIE aléatoire
+    y = rand()%TAILLE;
+    }
+    while (x<1 && x>9 && y<1 && y>9);
 
     tab[x][y] = MALADIE;
+
 
 }
 void Spawn_Piege(int tab[TAILLE][TAILLE]){
