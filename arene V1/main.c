@@ -3,6 +3,7 @@
 #include <time.h>
 #include <windows.h>
 
+#define TOURS 10
 #define MALADIE 6
 #define TAILLE 10
 #define CHANCE 2
@@ -497,7 +498,7 @@ int gagnant;
     Spawn_Bonus(tab);
     Spawn_Piege(tab);
 
-    for (i=0;i<10;i++){
+    for (i=0;i<TOURS;i++){
 
             Afficher_carte(tab);
             Tour_par_Tour(tab,nb_joueurs,Nb_Vies,joueur);
