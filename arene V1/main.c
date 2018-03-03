@@ -39,6 +39,104 @@ void Wait(){
 }
 
 
+IA(int joueur)
+{
+    switch(joueur)
+    {
+    case 1:
+        ///code IA
+        break;
+    case 2:
+        ///code IA
+        break;
+    case 3:
+        ///code IA
+        break;
+    case 4:
+        ///code IA
+        break;
+    case 5:
+        ///code IA
+        break;
+     case 6:
+        ///code IA
+        break;
+     case 7:
+        ///code IA
+        break;
+     case 8:
+        ///code IA
+        break;
+     case 9:
+        ///code IA
+        break;
+     case 10:
+        ///code IA
+        break;
+     case 11:
+        ///code IA
+        break;
+     case 12:
+        ///code IA
+        break;
+     case 13:
+        ///code IA
+        break;
+     case 14:
+        ///code IA
+        break;
+     case 15:
+        ///code IA
+        break;
+     case 16:
+        ///code IA
+        break;
+     case 17:
+        ///code IA
+        break;
+     case 18:
+        ///code IA
+        break;
+     case 19:
+        ///code IA
+        break;
+     case 20:
+        ///code IA
+        break;
+     case 21:
+        ///code IA
+        break;
+     case 22:
+        ///code IA
+        break;
+     case 23:
+        ///code IA
+        break;
+     case 24:
+        ///code IA
+        break;
+     case 25:
+        ///code IA
+        break;
+     case 26:
+        ///code IA
+        break;
+     case 27:
+        ///code IA
+        break;
+     case 28:
+        ///code IA
+        break;
+     case 29:
+        ///code IA
+        break;
+     case 30:
+        ///code IA
+        break;
+
+    }
+}
+
 int IA_test(){
 
     return 0;
@@ -226,7 +324,7 @@ int i,action,x,y;
 
             x = coord_JoueursX(tab,joueur);
             y = coord_JoueursY(tab,joueur);
-            //action = IA_i();
+            //action = IA(i);
             action = IA_test();
 
 
@@ -402,11 +500,13 @@ int Shifumi (int J1, int J2)
 int Afficher_Gagnant(int gagnant)
 {
     ClearTerms();
-    printf("gagnant \n \n");
+    printf("\n");
+    printf("===========================================\n \n \n \n");
+    printf("      LE GAGNANT EST LE JOUEUR %d !!! \n \n \n \n", gagnant);
+    printf("=========================================== \n \n");
     Wait();
     return 1;
 }
-
 int fin_jeu(int tab[TAILLE][TAILLE])
 {
     int i,j,y,joueur_Restant,test,Joueur1,Joueur2,cas,gagnant;
