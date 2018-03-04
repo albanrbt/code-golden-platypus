@@ -12,9 +12,39 @@
 #define PIEGE 33
 #define RADAR 3
 
-int Degats(int Nb_Vies[30],int joueur);
+/// LES PROTOTYPES
+
+int Degats(int Nb_Vies[30],int joueur); // initialise les degats
 
 int main();
+
+void ClearTerms(); // clear la console
+
+void Wait(); // fait une pause
+
+int coord_JoueursX(int tab[TAILLE][TAILLE],int joueurs); // dopnne le X de chaque joueur
+
+int coord_JoueursY(int tab[TAILLE][TAILLE],int joueurs); // donne le Y de chaque joueur
+
+int fin_jeu(int tab[TAILLE][TAILLE]); // declare la fin du jeu
+
+int Nombre_Joueurs(); // donne le nombre de joueurs dans la partie
+
+int Numero_Joueur(int tab[TAILLE][TAILLE],int test); // recupere le numero du joueur suivant ses coordonnees
+
+void Propagation_Maladie(int tab[TAILLE][TAILLE],int joueur,int Nb_Vies[30]); // propage la maladie
+
+int Shifumi (int J1, int J2); // lance le shifumi si egalite entre 2 joueurs
+
+void Spawn_Bonus(int tab[TAILLE][TAILLE]); // fait spawn les bonus
+
+void Spawn_Joueurs(int tab[TAILLE][TAILLE],int nb_joueurs); // fait spawn les joueurs avec 2 cases d'ecart avec la maladie
+
+void Spawn_Maladie (int tab[TAILLE][TAILLE]); // fait spawn la maladie
+
+void Spawn_Piege(int tab[TAILLE][TAILLE]); // fait spawn les pieges
+
+void Tour_par_Tour(int tab[TAILLE][TAILLE],int nb_joueurs,int Nb_Vies[30],int joueur); // execute les actions des joueurs
 
 void SetColor(int ForgC){//Ne pas tenir compte de cette fonction.
 
@@ -377,8 +407,9 @@ int i,action,x,y;
             }
        }
 
-       else if (action == 2){}
-
+       else if (action == 5){
+        tab[x][y] = joueur;
+       }
        else if (action == 2){}
         }
 }
