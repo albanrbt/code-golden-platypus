@@ -525,7 +525,65 @@ int Numero_Joueur(int tab[TAILLE][TAILLE],int test)
 
 int Shifumi (int J1, int J2)
 {
- printf("bataille entre %d et %d ", J1,J2);
+    int i,jeu_1,jeu_2;
+    int pierre = 1;
+    int ciseaux = 2 ;
+    int feuille = 3;
+    int gagnant = 0;
+
+    printf("bataille entre  joueur %d et joueur %d :", J1,J2);
+    do
+    {
+        for (i=0; i<3; i++)
+        {
+            jeu_1 = IA_test();
+            jeu_2 = IA_test();
+        }
+        if ((jeu_1==1) && (jeu_2==1))
+        {
+            printf("LES DEUX JOUEURS ONT FAIT PIERRE \n");
+        }
+        else if ((jeu_1==2) && (jeu_2==2))
+        {
+            printf("LES DEUX JOUEURS ONT FAIT CISEAUX\n");
+        }
+        else if ((jeu_1==3) && (jeu_2==3))
+        {
+            printf("LES DEUX JOUEURS ONT FAIT FEUILLE");
+        }
+        else if ((jeu_1==1) && (jeu_2==2))
+        {
+            printf(" Aie aie joueur %d a casse ses ciseaux contre la pierre de joueur %d\n",J2,J1);
+            gagnant = J1;
+        }
+        else if ((jeu_1==2) && (jeu_2==1))
+        {
+             printf(" Aie aie joueur %d a casse ses ciseaux contre la pierre de joueur %d \n",J1,J2);
+            gagnant = J2;
+        }
+        else if ((jeu_1==2) && (jeu_2==3))
+        {
+            printf(" Joueur %d a appris a Joueur %d comment reduire en confettis un mauvais bulletin \n",J1,J2);
+            gagnant = J1;
+        }
+        else if ((jeu_1==3) && (jeu_2==2))
+        {
+            printf(" Joueur %d a appris a Joueur %d comment reduire en confettis un mauvais bulletin\n ",J2,J1);
+            gagnant = J2;
+        }
+        else if ((jeu_1==1) && (jeu_2==3))
+        {
+            printf("joueur %d viens d'emballer a la perfection la pierre de Joueur %d dans sa feuille\n", J2,J1);
+            gagnant = J2;
+        }
+        else if ((jeu_1==3) && (jeu_2==1))
+        {
+             printf("joueur %d viens d'emballer a la perfection la pierre de Joueur %d dans sa feuille \n", J1,J2);
+             gagnant = J1;
+
+        }
+    } while (gagnant == 0);
+    return gagnant;
 }
 
 int Afficher_Gagnant(int gagnant)
