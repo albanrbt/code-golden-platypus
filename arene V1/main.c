@@ -606,7 +606,7 @@ int Afficher_Gagnant(int gagnant)
 }
 int fin_jeu(int tab[TAILLE][TAILLE])
 {
-    int gagnnt,i,j,y,joueur_Restant,test,Joueur1,Joueur2,cas,gagnant;
+    int i,j,y,joueur_Restant,test,Joueur1,Joueur2,cas,gagnant;
 
 
     test=0;
@@ -629,7 +629,6 @@ int fin_jeu(int tab[TAILLE][TAILLE])
          Joueur1 = Numero_Joueur(tab,test);
          test = Joueur1;
          Joueur2 = Numero_Joueur(tab,test);
-         gagnnt = Shifumi(Joueur1,Joueur2);
      }
 
 
