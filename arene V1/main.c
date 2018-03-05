@@ -167,6 +167,11 @@ IA(int joueur)
     }
 }
 
+int IA_test()
+{
+ return 0; 
+}
+
 int IA_test_Shifumi()
 {
     int x;
