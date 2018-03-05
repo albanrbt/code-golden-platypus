@@ -403,7 +403,7 @@ int i,action,x,y;
             }
        }
 
-       else if (action == 4){
+       else if (action == 4){ /// a gauche
         tab[x][y]=0;
         tab[x][y-1]=i;
 
@@ -415,7 +415,7 @@ int i,action,x,y;
             }
        }
 
-       else if (action == 5){
+       else if (action == 5){ /// pas bouger
         tab[x][y] = joueur;
        }
        else if (action == 2){}
