@@ -3,8 +3,8 @@
 #include <time.h>
 #include <windows.h>
 
-#define TOURS 10
-#define MALADIE 6
+#define TOURS 50
+#define MALADIE 66
 #define TAILLE 10
 #define CHANCE 2
 #define SOL 0
@@ -167,9 +167,12 @@ IA(int joueur)
     }
 }
 
-int IA_test(){
+int IA_test_Shifumi()
+{
+    int x;
+     x = rand()%3;
+     return x;
 
-    return 0;
 }
 
 int coord_JoueursX(int tab[TAILLE][TAILLE],int joueurs){
@@ -536,8 +539,8 @@ int Shifumi (int J1, int J2)
     {
         for (i=0; i<3; i++)
         {
-            jeu_1 = IA_test();
-            jeu_2 = IA_test();
+            jeu_1 = IA_test_Shifumi();
+            jeu_2 = IA_test_Shifumi();
         }
         if ((jeu_1==1) && (jeu_2==1))
         {
@@ -598,7 +601,7 @@ int Afficher_Gagnant(int gagnant)
 }
 int fin_jeu(int tab[TAILLE][TAILLE])
 {
-    int i,j,y,joueur_Restant,test,Joueur1,Joueur2,cas,gagnant;
+    int gagnnt,i,j,y,joueur_Restant,test,Joueur1,Joueur2,cas,gagnant;
 
 
     test=0;
@@ -621,7 +624,9 @@ int fin_jeu(int tab[TAILLE][TAILLE])
          Joueur1 = Numero_Joueur(tab,test);
          test = Joueur1;
          Joueur2 = Numero_Joueur(tab,test);
+         gagnnt = Shifumi(Joueur1,Joueur2);
      }
+
 
     if (joueur_Restant > 2)
     {
