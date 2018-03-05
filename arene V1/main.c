@@ -69,24 +69,31 @@ void Wait(){
 }
 
 
-IA(int joueur)
+int IA(int joueur)
 {
+    int choix;
+
     switch(joueur)
     {
     case 1:
-        ///code IA
+        choix = rand()%5;
+        return choix;
         break;
     case 2:
-        ///code IA
+        choix = rand()%5;
+        return choix;
         break;
     case 3:
-        ///code IA
+        choix = rand()%5;
+        return choix;
         break;
     case 4:
-        ///code IA
+        choix = rand()%5;
+        return choix;
         break;
     case 5:
-        ///code IA
+        choix = rand()%5;
+        return choix;
         break;
      case 6:
         ///code IA
@@ -169,7 +176,7 @@ IA(int joueur)
 
 int IA_test()
 {
- return 0; 
+ return 0;
 }
 
 int IA_test_Shifumi()
@@ -357,13 +364,13 @@ int i,action,x,y;
 
 
 
-        for (i=1;i<= nb_joueurs+1;i++)
+        for (i=1;i< nb_joueurs+1;i++)
         {
 
             x = coord_JoueursX(tab,joueur);
             y = coord_JoueursY(tab,joueur);
             //action = IA(i);
-            action = IA_test();
+            action = IA(i);
 
 
        if (action == 1){ ///en bas
@@ -376,6 +383,11 @@ int i,action,x,y;
             else if (tab[x+1][y] == PIEGE){
                 Degats(Nb_Vies,joueur);
             }
+            else if (tab[x+1][y] == tab[0][0] || tab[x+1][y] == tab[0][TAILLE-1] || tab[x+1][y] == tab[TAILLE-1][0] || tab[x+1][y] == tab[TAILLE-1][TAILLE-1]){
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+            }
        }
 
 
@@ -383,10 +395,16 @@ int i,action,x,y;
             tab[x][y]=0;
             tab[x-1][y]=i;
 
+
             if (tab[x-1][y] == KIT){
                 Bonus(Nb_Vies,joueur);
             }
             else if (tab[x-1][y] == PIEGE){
+                Degats(Nb_Vies,joueur);
+            }
+            else if (tab[x+1][y] == tab[0][0] || tab[x+1][y] == tab[0][TAILLE-1] || tab[x+1][y] == tab[TAILLE-1][0] || tab[x+1][y] == tab[TAILLE-1][TAILLE-1]){
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
                 Degats(Nb_Vies,joueur);
             }
        }
@@ -401,6 +419,11 @@ int i,action,x,y;
             else if (tab[x][y+1] == PIEGE){
                 Degats(Nb_Vies,joueur);
             }
+            else if (tab[x+1][y] == tab[0][0] || tab[x+1][y] == tab[0][TAILLE-1] || tab[x+1][y] == tab[TAILLE-1][0] || tab[x+1][y] == tab[TAILLE-1][TAILLE-1]){
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+            }
        }
 
        else if (action == 4){ /// a gauche
@@ -413,12 +436,17 @@ int i,action,x,y;
             else if (tab[x][y-1] == PIEGE){
                 Degats(Nb_Vies,joueur);
             }
+            else if (tab[x+1][y] == tab[0][0] || tab[x+1][y] == tab[0][TAILLE-1] || tab[x+1][y] == tab[TAILLE-1][0] || tab[x+1][y] == tab[TAILLE-1][TAILLE-1]){
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+            }
        }
 
-       else if (action == 5){ /// pas bouger
+       else if (action == 0){ /// pas bouger
         tab[x][y] = joueur;
        }
-       else if (action == 2){}
+
         }
 }
 
@@ -661,6 +689,14 @@ int fin_jeu(int tab[TAILLE][TAILLE])
  return y;
 }
 
+void mur (int tab[TAILLE][TAILLE]){
+    tab[0][0]=99;
+    tab[0][TAILLE-1]=99;
+    tab[TAILLE-1][0]=99;
+    tab[TAILLE-1][TAILLE-1]=99;
+
+}
+
 int main(){ /// Recuperer les valeurs des joueurs dans le tableau
 
 int i,j;
@@ -695,6 +731,7 @@ int gagnant;
     Spawn_Joueurs(tab,nb_joueurs);
     Spawn_Bonus(tab);
     Spawn_Piege(tab);
+    mur(tab);
 
     for (i=0;i<TOURS;i++){
 
