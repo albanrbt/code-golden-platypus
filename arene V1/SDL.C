@@ -7,11 +7,14 @@
 
 /* déclarations des constantes */
 #define MALADIE 666
-#define TAILLE 10
+#define TAILLE 10 /// problème si la taille est différente de 10
 #define HAUTEUR_PX 640
 #define LARGEUR_PX 640
 #define TAILLE_CASE 40
+#define CHANCE 2
+#define TOURS 10
 
+/* pop automatique de la maladie -> Fonctionne*/
 
 void Spawn_Maladie (SDL_Surface* tab[TAILLE][TAILLE],SDL_Surface *ecran)
 {
@@ -20,8 +23,6 @@ void Spawn_Maladie (SDL_Surface* tab[TAILLE][TAILLE],SDL_Surface *ecran)
     SDL_Surface *Maladie = NULL;
     SDL_Rect position;
     srand(time(NULL));
-
-
 
     do
 
@@ -56,89 +57,61 @@ void Spawn_Maladie (SDL_Surface* tab[TAILLE][TAILLE],SDL_Surface *ecran)
 
 }
 //(SDL_Surface* tab[TAILLE][TAILLE],SDL_Surface *ecran)
-void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],int joueur,int Nb_Vies[30]){
+void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],SDL_Surface *ecran,int joueur,int Nb_Vies[30]){
+    /*
+    Retourne 3 avec l'utilisation de la SDL
+    Besoin de créer un tableau d'entiers?
 
+    */
 
 
     int i,j;
-
     int test;
-
     int degats;
-
-    int tab1[TAILLE][TAILLE];
-
-
-
-
-
+    SDL_Surface *tab1[TAILLE][TAILLE] = {NULL};/// idée: mettre tab1 en entrée en SDL_surface et essayer de mettre l'autre tableau en entier, puis retirer les boucles
     srand(time(NULL));
+    SDL_Surface *Maladie = NULL;
+    SDL_Rect position;
+    Maladie = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_CASE, TAILLE_CASE, 32, 0, 0, 0, 0); /* Creation d'un rectangle */
+    SDL_FillRect(Maladie, NULL, SDL_MapRGB(Maladie->format, 50, 200, 50)); /* remplissage du rectangle*/
 
-
-
+/// truc à modifier ici?{
     for(i=0;i<TAILLE;i++){
 
-
-
         for(j=0;j<TAILLE;j++){
-
-
-
             tab1[i][j] = tab[i][j];
 
 }
-
-}
-
-
-
-
-
+}///}
     for (i=0;i<TAILLE-1;i++){
-
-
-
-
-
         for(j=0;j<TAILLE-1;j++){
-
-
-
-
-
-            if (tab[i][j] == MALADIE){
-
-
-
+            if (tab[i][j] == Maladie){
                 test = rand()%CHANCE;   // 1 CHANCE sur 5 que la MALADIE se propage
 
-
-
                 if (test == 1 && i > 0 && j > 0 && i<TAILLE && j<TAILLE){ // Propagation de la MALADIE
-
                     if (tab[i-1][j] >= 1 && tab[i-1][j]<=30){
 
-
-
-                    degats = Degats(Nb_Vies,joueur);
-
-
+                 //   degats = Degats(Nb_Vies,joueur);
 
 
 
                 }
-
                 if (degats == 0){
 
-                    tab1[i-1][j] = MALADIE;
+                    tab1[i-1][j] = Maladie;
+                    SDL_BlitSurface(Maladie, NULL, ecran, &position);
 
             }
 
                 else
 
                     {
+                            position.x = i*(TAILLE_CASE+3)+2;
+                            position.y = j*(TAILLE_CASE+3)+2;
 
-                    tab1[i-1][j] = MALADIE;
+
+                    tab1[i-1][j] = Maladie;
+                    SDL_BlitSurface(Maladie, NULL, ecran, &position);
 
 
 
@@ -160,7 +133,7 @@ void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],int joueur,int Nb_Vies
 
 
 
-                            degats = Degats(Nb_Vies,joueur);
+//                            degats = Degats(Nb_Vies,joueur);
 
 }
 
@@ -168,19 +141,18 @@ void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],int joueur,int Nb_Vies
 
                 if (degats == 0){
 
-                    tab1[i+1][j] = MALADIE;
+                    tab1[i+1][j] = Maladie;
+                    SDL_BlitSurface(Maladie, NULL, ecran, &position);
 
 
 
 }
+            else{
 
 
 
-                else{
-
-
-
-                   tab1[i+1][j] = MALADIE;
+                   tab1[i+1][j] = Maladie;
+                   SDL_BlitSurface(Maladie, NULL, ecran, &position);
 
                 }
 
@@ -196,7 +168,7 @@ void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],int joueur,int Nb_Vies
 
 
 
-                        degats = Degats(Nb_Vies,joueur);
+//                        degats = Degats(Nb_Vies,joueur);
 
 
 
@@ -208,7 +180,8 @@ void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],int joueur,int Nb_Vies
 
                 if (degats == 0){
 
-                    tab1[i][j-1] = MALADIE;
+                    tab1[i][j-1] = Maladie;
+                    SDL_BlitSurface(Maladie, NULL, ecran, &position);
 
 }
 
@@ -218,7 +191,8 @@ void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],int joueur,int Nb_Vies
 
                     {
 
-                    tab1[i][j-1] = MALADIE;
+                    tab1[i][j-1] = Maladie;
+                    SDL_BlitSurface(Maladie, NULL, ecran, &position);
 
                     }
 
@@ -236,7 +210,7 @@ void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],int joueur,int Nb_Vies
 
 
 
-                        degats = Degats(Nb_Vies,joueur);
+                        //degats = Degats(Nb_Vies,joueur);
 
 
 
@@ -246,7 +220,8 @@ void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],int joueur,int Nb_Vies
 
                  if (degats == 0){
 
-                    tab1[i][j+1] = MALADIE;
+                    tab1[i][j+1] = Maladie;
+                    SDL_BlitSurface(Maladie, NULL, ecran, &position);
 
 }
 
@@ -256,10 +231,10 @@ void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],int joueur,int Nb_Vies
 
                         {
 
-                        tab1[i][j+1] = MALADIE;
+                        tab1[i][j+1] = Maladie;
 
 
-
+                        SDL_BlitSurface(Maladie, NULL, ecran, &position);
                     }
 
                 }
@@ -271,7 +246,7 @@ void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],int joueur,int Nb_Vies
 }
 
 
-
+/// truc a modifier?{
     for(i=0;i<TAILLE;i++){
 
 
@@ -284,9 +259,10 @@ void Propagation_Maladie(SDL_Surface* tab[TAILLE][TAILLE],int joueur,int Nb_Vies
 
         }
 
-    }
+    }///}
 
-
+     // Collage de la surface sur l'écran
+    SDL_Flip(ecran);
 
     }
 // permet de faire une pause dans le programme (permet d'afficher la fenêtre)
@@ -304,7 +280,7 @@ void pause()
         }
     }
 }
-// crée l'arène
+/// crée l'arène du jeu
 void creer_interface(SDL_Surface *ecran)
 {
     int i,j;
@@ -312,16 +288,13 @@ void creer_interface(SDL_Surface *ecran)
 //    int nb_joueurs;
 
     SDL_Surface *vide = NULL;
-    //SDL_Surface *ecran = NULL;
     SDL_Surface *rectangle = NULL;
     SDL_Surface *texte = NULL;
     SDL_Rect position;
-
-
-    //TTF_Font *police = NULL;
-   // SDL_Color CouleurNoire = {0, 0, 0};
-
-   // SDL_Init(SDL_INIT_VIDEO);
+    int nb_joueurs;
+    int Nb_Vies[30];
+    int joueur = 1;  /// Le joueur qui joue actuellement
+    int gagnant;
 
     ecran = SDL_SetVideoMode(LARGEUR_PX,HAUTEUR_PX,32,SDL_DOUBLEBUF|SDL_HWSURFACE); // création de la fenêtre
     if (ecran == NULL)// en cas d'erreur
@@ -363,6 +336,8 @@ for(i=0;i<TAILLE;i++)
     SDL_Flip(ecran);// mise à jour de l'écran
     Spawn_Maladie(tab[TAILLE][TAILLE],ecran);
     SDL_Flip(ecran);
+   // Propagation_Maladie(tab[TAILLE][TAILLE],ecran,joueur,Nb_Vies);
+    SDL_Flip(ecran);
     /// cette partie ne fonctionne pas : à vérifier avec une bonne installation de SDL_ttf{
     /*TTF_Init();
    if(TTF_Init() == -1)
@@ -394,6 +369,7 @@ int main ( int argc, char* argv[] )
 {
 
 
+
 if(SDL_Init(SDL_INIT_VIDEO)==-1) //on démarre la SDL. Dans le cas où il y a une erreur:
     {
         fprintf(stderr,"erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // écriture de l'erreur
@@ -409,4 +385,3 @@ creer_interface(ecran);
 return EXIT_SUCCESS;
 
 }
-
