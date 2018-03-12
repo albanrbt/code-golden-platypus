@@ -757,6 +757,11 @@ int i,action,x,y;
                 Degats(Nb_Vies,joueur);
 
             }
+            else if (tab[x+1][y] == 99){
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+            }
 
        }
 
@@ -783,6 +788,11 @@ int i,action,x,y;
                 Degats(Nb_Vies,joueur);
 
             }
+            else if (tab[x-1][y] == 99){
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+            }
 
        }
 
@@ -807,6 +817,11 @@ int i,action,x,y;
                 Degats(Nb_Vies,joueur);
 
             }
+            else if (tab[x][y+1] == 99){
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+            }
 
        }
 
@@ -830,6 +845,11 @@ int i,action,x,y;
 
                 Degats(Nb_Vies,joueur);
 
+            }
+            else if (tab[x][y-1] == 99){
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
+                Degats(Nb_Vies,joueur);
             }
 
        }
@@ -1214,6 +1234,14 @@ int Afficher_Gagnant(int gagnant)
 
 }
 
+void mur (int tab[TAILLE][TAILLE]){
+    tab[0][0]=99;
+    tab[0][TAILLE-1]=99;
+    tab[TAILLE-1][0]=99;
+    tab[TAILLE-1][TAILLE-1]=99;
+
+}
+
 int fin_jeu(int tab[TAILLE][TAILLE])
 
 {
@@ -1392,6 +1420,7 @@ int gagnant;
 
     Spawn_Piege(tab);
 
+    mur(tab);
 
 
     for (i=0;i<TOURS;i++){
